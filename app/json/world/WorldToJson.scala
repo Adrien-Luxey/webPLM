@@ -12,6 +12,7 @@ import play.api.libs.json.Json.toJsFieldJsValueWrapper
 import plm.universe.sort.SortingWorld
 import lessons.sort.dutchflag.universe.DutchFlagWorld
 import lessons.sort.pancake.universe.PancakeWorld
+import lessons.lander.universe.LanderWorld
 import json.world.pancake.PancakeWorldToJson
 import lessons.sort.baseball.universe._
 import json.world.baseball.BaseballWorldToJson
@@ -50,6 +51,12 @@ object WorldToJson {
         json = HanoiWorldToJson.hanoiWorldWrite(hanoiWorld)
       case turtleWorld: TurtleWorld =>
         json = TurtleWorldToJson.turtleWorldWrite(turtleWorld)
+        var entities = world.getEntities.toArray(Array[Entity]())
+        json = json.as[JsObject] ++ Json.obj(
+            "entities" -> EntityToJson.entitiesWrite(entities)
+        )
+      case landerWorld: LanderWorld =>
+      	json = LanderWorldToJson.landerWorldWrite(landerWorld)
         var entities = world.getEntities.toArray(Array[Entity]())
         json = json.as[JsObject] ++ Json.obj(
             "entities" -> EntityToJson.entitiesWrite(entities)
